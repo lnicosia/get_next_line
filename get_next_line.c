@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/14 16:31:04 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/14 18:45:48 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_list	*lst_contains(t_list *lst, int fd)
 		tmp = (t_read*)(lst->content);
 		if (tmp != NULL)
 		{
-		if (tmp->fd == fd)
-			return (lst);
+			if (tmp->fd == fd)
+				return (lst);
 		}
 		lst = lst->next;
 	}
@@ -43,7 +43,7 @@ char	*strealloc(char *s1, int size1, char *s2, int size2)
 	return (s1);
 }
 
-void	set_data(t_read *current, char **line)
+int		set_data(t_read *current, char **line)
 {
 	size_t	i;
 	char	*final;
@@ -54,15 +54,21 @@ void	set_data(t_read *current, char **line)
 		i++;
 	current->index = i;
 	final = ft_strnew(i);
-	ft_putstr("\nTOTAL READ: "); ft_putendl(current->str);
+	ft_putstr("TOTAL READ: "); ft_putstr(current->str);
 	ft_strncpy(final, current->str, i);
 	*line = final;
-	tmp = ft_strnew(ft_strlen(current->str));
-	ft_strcpy(tmp, current->str + i + 1);
-	free(current->str);
-	current->str = tmp;
 	ft_putstr("LINE: "); ft_putendl(final);
-	ft_putstr("NEXT READ: \n"); ft_putendl(current->str);
+	if (i < ft_strlen(current->str))
+	{
+		tmp = ft_strsub(current->str, i + 1, ft_strlen(current->str) - i - 1);
+		//free(current->str);
+		current->str = tmp;
+		//free(tmp);
+		ft_putstr("NEXT READ: "); ft_putendl(current->str);
+	}
+	if (!(current->str[0]))
+		return (0);
+	return (1);
 }
 
 int		get_next_line(const int fd, char **line)
@@ -76,14 +82,14 @@ int		get_next_line(const int fd, char **line)
 	current = (t_read*)malloc(sizeof(*current));
 	if ((datas = lst_contains(datas, fd)) == NULL)
 	{
-		//ft_putendl("UNKNOWN FD");
+		ft_putendl("UNKNOWN FD");
 		current->str = ft_strnew(0);
 		current->fd = fd;
 		ft_lstadd(&datas, ft_lstnew(current, sizeof(*current)));
 	}
 	else
 	{
-		//ft_putendl("KNOWN FD");
+		ft_putendl("KNOWN FD");
 		current = (t_read*)(datas->content);
 		//ft_putstr("FORMER STR: "); ft_putendl(current.str);
 	}
@@ -92,9 +98,9 @@ int		get_next_line(const int fd, char **line)
 		current->str = strealloc(current->str, ft_strlen(current->str), buff, bytes);
 		if (ft_strchr(buff, '\n') != NULL)
 		{
-			set_data(current, line);
-			return (1);
+			return (set_data(current, line));
 		}
 	}
-	return (0);
+	ft_putendl("EOF");
+	return (set_data(current,line));
 }
