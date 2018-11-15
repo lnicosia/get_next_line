@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:28:08 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/15 17:10:52 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/15 17:10:26 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	//ft_putendl("CLOSE OK");
+	while(1);
 	return (0);
 }
