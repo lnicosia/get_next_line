@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/15 14:42:52 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/15 16:52:09 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void		set_data(t_read **current, char **line)
 	char	*tmp;
 
 	i = 0;
-	while ((*current)->str[i] != '\n')
+	//ft_putstr("-TOTAL READ: "); ft_putendl((*current)->str);
+	while (((*current)->str[i] != '\n') && ((*current)->str[i]))
 		i++;
 	final = ft_strnew(i);
-	//ft_putstr("-TOTAL READ: "); ft_putendl((*current)->str);
 	ft_strncpy(final, (*current)->str, i);
 	*line = final;
-	//ft_putstr("-LINE: "); ft_putendl(final);
+	//ft_putstr("-LINE: "); ft_putendl(*line);
 	if (i < ft_strlen((*current)->str) - 1)
 	{
 		//ft_putstr("strlen: "); ft_putnbr(ft_strlen(current->str)); ft_putstr(" i: "); ft_putnbr(i); ft_putstr(" last char: \'"); ft_putchar(current->str[i]); ft_putendl("\'");
@@ -79,14 +79,14 @@ int		get_next_line(const int fd, char **line)
 	int				bytes;
 	int				new;
 
+	if (fd < 0)
+		return (-1);
 	if ((new =lst_contains(datas, &current, fd)) == 0)
 	{
 		current = (t_read*)malloc(sizeof(*current));
 		current->str = ft_strnew(0);
 		current->fd = fd;
 		//ft_putstr("-- UNKNOWN FD: "); ft_putnbr(fd); ft_putendl(" --");
-		//datas = ft_lstnew(current, sizeof(*current));
-		//ft_putendl("NEW NODE CREATED");
 	}
 	else
 	{
@@ -102,6 +102,8 @@ int		get_next_line(const int fd, char **line)
 	}
 	while ((bytes = read(fd, buff, BUFF_SIZE)))
 	{
+		if (bytes < 0)
+			return (-1);
 		current->str = strealloc(current->str, ft_strlen(current->str), buff, bytes);
 		if (ft_strchr(buff, '\n') != NULL)
 		{
@@ -111,6 +113,13 @@ int		get_next_line(const int fd, char **line)
 			return (1);
 		}
 	}
-	//ft_putendl("-EOF");
+	if (current->str[0])
+	{
+		//ft_putendl("-EOF: ");
+		set_data(&current, line);
+		if (new == 0)
+			ft_lstadd(&datas, ft_lstnew(current, sizeof(*current)));
+		return (1);
+	}
 	return (0);
 }
