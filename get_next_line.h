@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 18:23:24 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/15 17:16:04 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/16 15:50:44 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 typedef struct	s_read
 {
 	int		fd;
-	size_t	index;
 	char	*str;
 }				t_read;
 

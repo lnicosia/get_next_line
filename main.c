@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:28:08 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/15 17:10:52 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/16 15:41:34 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		main(int argc, char **argv)
 	}
 	//ft_putstr("BUFF_SIZE: "); ft_putnbr(BUFF_SIZE); ft_putendl("");
 	line = (char**)malloc(sizeof(char*));
+	//line = NULL;
 	if (!(fd = open(argv[1], O_RDONLY)))
 	{
 		//ft_putendl("Err OPEN");
@@ -42,6 +43,7 @@ int		main(int argc, char **argv)
 		//ft_putnbr(i++); ft_putendl("-");
 		ft_putendl(*line);
 	}
+	ft_strdel(line);
 	//get_next_line(fd, line);
 	if (close(fd) == -1)
 	{
