@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/16 15:49:08 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/16 18:40:45 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,16 @@ void		set_data(t_read *current, char **line)
 int		get_next_line(const int fd, char **line)
 {
 	static t_list	*datas = NULL;
+	//t_list			*tmp;
+	int				new;
 	t_read			*current;
 	char			buff[BUFF_SIZE + 1];
 	int				bytes;
-	int				new;
 
 	//ft_putendl("-- NEW CALL --");
 	if (fd < 0 || line == NULL)
 		return (-1);
-	if ((new =lst_contains(datas, &current, fd)) == 0)
+	if ((new = lst_contains(datas, &current, fd)) == 0)
 	{
 		current = (t_read*)malloc(sizeof(*current));
 		current->str = ft_strnew(0);
@@ -112,8 +113,20 @@ int		get_next_line(const int fd, char **line)
 	{
 		//ft_putendl("-EOF: ");
 		set_data(current, line);
+		if (new == 0)
+			ft_lstadd(&datas, ft_lstnew(current, sizeof(*current)));
 		return (1);
 	}
-	ft_strdel(line);
+	/*ft_strdel(line);
+	ft_strdel(&(current->str));
+	free(current);
+	current = NULL;*/
+	/*if (datas->next)
+	{
+		tmp = datas;
+		datas = datas->next;
+		free(tmp);
+		datas->next = NULL;
+	}*/
 	return (0);
 }
