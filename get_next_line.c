@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/20 16:04:17 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/20 16:45:23 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,36 +67,6 @@ void		set_data(t_read *current, char **line)
 	}
 }
 
-void	del_elem(int fd, t_list **datas)
-{
-	t_read *read;
-	//t_list *del;
-	t_list *tmp;
-	//t_list *reader;
-
-	tmp = *datas;
-	while (tmp->next != NULL)
-	{
-		read = (t_read*)tmp->content;
-		if (read->fd == fd)
-		{
-			/*ft_putstr("lst #"); ft_putnbr(fd); ft_putendl(" found. Let's try to free this.");
-			del = tmp;
-			ft_strdel(&read->str);
-			free(tmp->content);
-			tmp->content = NULL;
-			tmp = tmp->next;
-			free(del);
-			del = NULL;*/
-		}
-		tmp = tmp->next;
-	}
-	free((*datas)->content);
-	(*datas)->content = NULL;
-	free(*datas);
-	*datas = NULL;
-}
-
 int		get_next_line(const int fd, char **line)
 {
 	static t_list	*datas = NULL;
@@ -135,7 +105,11 @@ int		get_next_line(const int fd, char **line)
 		{
 			set_data(current, line);
 			if (new == 0)
+			{
 				ft_lstadd(&datas, ft_lstnew(current, sizeof(*current)));
+				free(current);
+				current = NULL;
+			}
 			return (1);
 		}
 	}
@@ -144,10 +118,13 @@ int		get_next_line(const int fd, char **line)
 		//ft_putendl("-EOF: ");
 		set_data(current, line);
 		if (new == 0)
+		{
 			ft_lstadd(&datas, ft_lstnew(current, sizeof(*current)));
+			free(current);
+			current = NULL;
+		}
 		return (1);
 	}
-	ft_putstr("-- FD "); ft_putnbr(fd); ft_putendl(" read --");
-	del_elem(fd, &datas);
+	//ft_putstr("-- FD "); ft_putnbr(fd); ft_putendl(" read --");
 	return (0);
 }

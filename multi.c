@@ -6,7 +6,7 @@
 /*   By: gaerhard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 12:10:16 by gaerhard          #+#    #+#             */
-/*   Updated: 2018/11/20 14:59:17 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/20 16:47:11 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,4 @@ int		main(int argc, char **argv)
 	}
 	free(fd);
 	while (1);
-	ft_putendl("boucle infinie pour check les leaks");
 }
