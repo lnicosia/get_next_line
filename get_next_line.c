@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/20 14:40:19 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/20 15:04:47 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,20 @@ void		set_data(t_read *current, char **line)
 	}
 }
 
-void	del_elem(int fd, t_list **datas)
+void	del_elem(int fd, t_list *datas)
 {
 	t_read *tmp;
-	t_list **reader;
+	t_list *reader;
 
 	reader = datas;
-	while (*reader != NULL)
+	while (reader != NULL)
 	{
-		tmp = (t_read*)(*datas)->content;
+		tmp = (t_read*)datas->content;
 		if (tmp->fd == fd)
-			ft_putstr("maillon #"); ft_putnbr(fd); ft_putendl("trouve.");
-		*reader = (*reader)->next;
+		{
+			ft_putstr("lst #"); ft_putnbr(fd); ft_putendl(" found.");
+		}
+		reader = reader->next;
 	}
 }
 
@@ -132,6 +134,7 @@ int		get_next_line(const int fd, char **line)
 			ft_lstadd(&datas, ft_lstnew(current, sizeof(*current)));
 		return (1);
 	}
-	//del_elem(fd, datas);
+	ft_putstr("-- FD "); ft_putnbr(fd); ft_putendl(" read --");
+	del_elem(fd, datas);
 	return (0);
 }

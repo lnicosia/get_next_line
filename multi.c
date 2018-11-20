@@ -6,7 +6,7 @@
 /*   By: gaerhard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 12:10:16 by gaerhard          #+#    #+#             */
-/*   Updated: 2018/11/20 14:27:13 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/20 14:59:17 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		main(int argc, char **argv)
 	while (i < argc)
 	{
 		fd[i] = open(argv[i], O_RDONLY);
+		ft_putstr(argv[i]); ft_putstr("/fd = "); ft_putnbr(fd[i]); ft_putendl("");
 		i++;
 	}
 	i = 1;
