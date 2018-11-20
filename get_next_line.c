@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/16 18:40:45 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/20 14:40:19 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,21 @@ void		set_data(t_read *current, char **line)
 	}
 }
 
+void	del_elem(int fd, t_list **datas)
+{
+	t_read *tmp;
+	t_list **reader;
+
+	reader = datas;
+	while (*reader != NULL)
+	{
+		tmp = (t_read*)(*datas)->content;
+		if (tmp->fd == fd)
+			ft_putstr("maillon #"); ft_putnbr(fd); ft_putendl("trouve.");
+		*reader = (*reader)->next;
+	}
+}
+
 int		get_next_line(const int fd, char **line)
 {
 	static t_list	*datas = NULL;
@@ -117,16 +132,6 @@ int		get_next_line(const int fd, char **line)
 			ft_lstadd(&datas, ft_lstnew(current, sizeof(*current)));
 		return (1);
 	}
-	/*ft_strdel(line);
-	ft_strdel(&(current->str));
-	free(current);
-	current = NULL;*/
-	/*if (datas->next)
-	{
-		tmp = datas;
-		datas = datas->next;
-		free(tmp);
-		datas->next = NULL;
-	}*/
+	//del_elem(fd, datas);
 	return (0);
 }
