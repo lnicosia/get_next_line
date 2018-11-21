@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 12:33:01 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 13:30:00 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int		set_data(t_read *curr, char **line)
 	char	*tmp;
 
 	i = 0;
-	ft_putstr("Total read: "); ft_putendl(curr->str);
-	ft_putstr("len = "); ft_putnbr(ft_strlen(curr->str)); ft_putendl("");
 	while ((curr->str[i] != '\n') && (curr->str[i]))
 		i++;
 	if (!(*line = ft_strnew(i)))

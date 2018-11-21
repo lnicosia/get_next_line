@@ -6,14 +6,14 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 18:23:24 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 12:28:56 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 14:31:33 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # include <stdlib.h>
-# define BUFF_SIZE 1
+# define BUFF_SIZE 32
 
 typedef struct	s_read
 {

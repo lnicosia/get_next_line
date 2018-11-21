@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:28:08 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 12:09:38 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 13:54:49 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int		main(int argc, char **argv)
 	}
 	while (((ret = (get_next_line(fd, line))) == 1))
 	{
-		ft_putstr("line: "); ft_putendl(*line);
+		//ft_putstr("line: "); 
+		ft_putendl(*line);
 		ft_strdel(line);
 	}
 	if (close(fd) == -1)
