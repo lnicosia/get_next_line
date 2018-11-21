@@ -6,12 +6,12 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 13:30:00 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 15:57:44 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft.h"
+#include "libft/libft.h"
 
 int		lst_contains(t_list *lst, t_read **curr, int fd)
 {
@@ -28,21 +28,7 @@ int		lst_contains(t_list *lst, t_read **curr, int fd)
 	return (0);
 }
 
-char	*strealloc(char *s1, int size1, char *s2, int size2)
-{
-	char	*tmp;
-
-	tmp = s1;
-	s2[size2] = '\0';
-	if (!(s1 = ft_strnew(size1 + size2)))
-		return (0);
-	ft_strcpy(s1, tmp);
-	ft_strdel(&tmp);
-	ft_strcat(s1, s2);
-	return (s1);
-}
-
-int		set_data(t_read *curr, char **line)
+int		set_line(t_read *curr, char **line)
 {
 	size_t	i;
 	char	*tmp;
@@ -74,7 +60,7 @@ int		set_and_add(t_list **datas, char **line, t_read *curr, int new)
 {
 	t_list *lst;
 
-	if (set_data(curr, line) == -1)
+	if (set_line(curr, line) == -1)
 		return (-1);
 	if (new == 0)
 	{
@@ -107,8 +93,8 @@ int		get_next_line(const int fd, char **line)
 	}
 	while ((!(ft_strchr(curr->str, '\n'))) && (ret = read(fd, buff, BUFF_SIZE)))
 	{
-		if (ret < 0 || !(curr->str = strealloc(curr->str,
-						ft_strlen(curr->str), buff, ret)))
+		buff[ret] = '\0';
+		if (ret < 0 || !(curr->str = ft_strjoin_free(curr->str, buff)))
 			return (-1);
 	}
 	if (curr->str[0])
