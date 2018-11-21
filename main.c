@@ -6,12 +6,13 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:28:08 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 10:13:21 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 12:09:38 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "libft.h"
 #include "get_next_line.h"
 
@@ -22,34 +23,26 @@ int		main(int argc, char **argv)
 	int		fd = 0;
 	int		i;
 	char	**line;
+	int		ret;
 
 	i = 1;
 	if (argc == 1)
 	{
-		//ft_putendl("Err NO FILE");
 		return (1);
 	}
-	//ft_putstr("BUFF_SIZE: "); ft_putnbr(BUFF_SIZE); ft_putendl("");
 	line = (char**)malloc(sizeof(char*));
-	//line = NULL;
 	if (!(fd = open(argv[1], O_RDONLY)))
 	{
-		//ft_putendl("Err OPEN");
 		return (1);
 	}
-	//ft_putendl("OPEN OK");
-	while (get_next_line(fd, line) == 1)
+	while (((ret = (get_next_line(fd, line))) == 1))
 	{
-		//ft_putnbr(i++); ft_putendl("-");
-		ft_putendl(*line);
+		ft_putstr("line: "); ft_putendl(*line);
 		ft_strdel(line);
 	}
-	//get_next_line(fd, line);
 	if (close(fd) == -1)
 	{
-		//ft_putendl("Err CLOSE");
 		return (1);
 	}
-	//ft_putendl("CLOSE OK");
-	return (0);
+	return (ret);
 }
