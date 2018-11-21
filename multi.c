@@ -6,7 +6,7 @@
 /*   By: gaerhard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 12:10:16 by gaerhard          #+#    #+#             */
-/*   Updated: 2018/11/20 16:47:11 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 17:06:25 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		main(int argc, char **argv)
 	i = 1;
 	while (get_next_line(fd[i], &line) > 0)
 	{
-		ft_putstr("boucle: ");
+		//ft_putstr("boucle: ");
 		ft_putendl(line);
 		free(line);
 		line = NULL;
