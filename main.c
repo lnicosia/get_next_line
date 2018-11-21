@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:28:08 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/16 15:41:34 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 10:13:21 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int		main(int argc, char **argv)
 	{
 		//ft_putnbr(i++); ft_putendl("-");
 		ft_putendl(*line);
+		ft_strdel(line);
 	}
-	ft_strdel(line);
 	//get_next_line(fd, line);
 	if (close(fd) == -1)
 	{
