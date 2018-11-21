@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/20 16:45:23 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 10:22:46 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void		set_data(t_read *current, char **line)
 	char	*tmp;
 
 	i = 0;
-	//ft_putstr("-TOTAL READ: "); ft_putendl(current->str);
+	ft_putstr("-TOTAL READ: "); ft_putendl(current->str);
 	while ((current->str[i] != '\n') && (current->str[i]))
 		i++;
 	*line = ft_strnew(i);
 	ft_strncpy(*line, current->str, i);
-	//ft_putstr("-LINE: "); ft_putendl(*line);
+	ft_putstr("-LINE: "); ft_putendl(*line);
 	if (i < ft_strlen(current->str) - 1)
 	{
 		tmp = current->str;
@@ -61,7 +61,7 @@ void		set_data(t_read *current, char **line)
 	}
 	else
 	{
-		//ft_putendl("Read just enough.");
+		ft_putendl("Read just enough.");
 		ft_strdel(&(current->str));
 		current->str = ft_strnew(0);
 	}
@@ -76,7 +76,7 @@ int		get_next_line(const int fd, char **line)
 	char			buff[BUFF_SIZE + 1];
 	int				bytes;
 
-	//ft_putendl("-- NEW CALL --");
+	ft_putendl("-- NEW CALL --");
 	if (fd < 0 || line == NULL)
 		return (-1);
 	if ((new = lst_contains(datas, &current, fd)) == 0)
@@ -84,11 +84,11 @@ int		get_next_line(const int fd, char **line)
 		current = (t_read*)malloc(sizeof(*current));
 		current->str = ft_strnew(0);
 		current->fd = fd;
-		//ft_putstr("-- UNKNOWN FD: "); ft_putnbr(fd); ft_putendl(" --");
+		ft_putstr("-- UNKNOWN FD: "); ft_putnbr(fd); ft_putendl(" --");
 	}
 	else
 	{
-		//ft_putstr("-- KNOWN FD: "); ft_putnbr(current->fd); ft_putendl(" --");
+		ft_putstr("-- KNOWN FD: "); ft_putnbr(current->fd); ft_putendl(" --");
 		if (ft_strchr(current->str, '\n') != NULL)
 		{
 			set_data(current, line);
@@ -100,7 +100,7 @@ int		get_next_line(const int fd, char **line)
 		if (bytes < 0)
 			return (-1);
 		current->str = strealloc(current->str, ft_strlen(current->str), buff, bytes);
-		//ft_putstr("read: "); ft_putendl(current->str);
+		ft_putstr("read: "); ft_putendl(current->str);
 		if (ft_strchr(buff, '\n') != NULL)
 		{
 			set_data(current, line);
@@ -115,7 +115,7 @@ int		get_next_line(const int fd, char **line)
 	}
 	if (current->str[0])
 	{
-		//ft_putendl("-EOF: ");
+		ft_putendl("Read too much: ");
 		set_data(current, line);
 		if (new == 0)
 		{
@@ -125,6 +125,7 @@ int		get_next_line(const int fd, char **line)
 		}
 		return (1);
 	}
-	//ft_putstr("-- FD "); ft_putnbr(fd); ft_putendl(" read --");
+	ft_putendl("-EOF: ");
+	ft_putstr("-- FD "); ft_putnbr(fd); ft_putendl(" read --");
 	return (0);
 }
