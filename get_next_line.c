@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 18:43:52 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/21 19:25:27 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ int		lst_contains(t_list *lst, t_read **curr, int fd)
 	return (0);
 }
 
-int		free_link(t_list **datas, int fd)
+/*int		free_link(t_list **datas, int fd)
 {
 	t_read	*read;
 	if (*datas == NULL)
 		return (0);
 	read = (t_read*)((*datas)->content);
-	//ft_putstr("Current data fd: "); ft_putnbr((((t_read*)(*datas)->content))->fd); ft_putendl("");
 	ft_putstr("Current data fd: "); ft_putnbr(read->fd); ft_putendl("");
 	if (read->fd == fd)
 	{
@@ -49,7 +48,7 @@ int		free_link(t_list **datas, int fd)
 	else
 		ft_putendl("Multiple links");
 	return (0);
-}
+}*/
 
 int		set_line(t_read *curr, char **line)
 {
@@ -83,18 +82,27 @@ int		set_and_add(t_list **datas, char **line, t_read *curr, int new)
 {
 	t_list *lst;
 
-	ft_putendl("setting data");
-	if (set_line(curr, line) == -1)
-		return (-1);
-	if (new == 0)
+	if (curr->str[0])
 	{
-		if (!(lst = ft_lstnew(curr, sizeof(*curr))))
+		if (set_line(curr, line) == -1)
 			return (-1);
-		ft_lstadd(datas, lst);
+		if (new == 0)
+		{
+			if (!(lst = ft_lstnew(curr, sizeof(*curr))))
+				return (-1);
+			ft_lstadd(datas, lst);
+			free(curr);
+			curr = NULL;
+		}
+		return (1);
+	}
+	if (curr->str)
+	{
+		ft_strdel(&curr->str);
 		free(curr);
 		curr = NULL;
 	}
-	return (1);
+	return (0);
 }
 
 int		get_next_line(const int fd, char **line)
@@ -114,7 +122,6 @@ int		get_next_line(const int fd, char **line)
 		if (!(curr->str = ft_strnew(0)))
 			return (-1);
 		curr->fd = fd;
-		ft_putstr("-- UNKNOWN FD: "); ft_putnbr(fd); ft_putendl(" --");
 	}
 	while ((!(ft_strchr(curr->str, '\n'))) && (ret = read(fd, buff, BUFF_SIZE)))
 	{
@@ -122,16 +129,5 @@ int		get_next_line(const int fd, char **line)
 		if (ret < 0 || !(curr->str = ft_strjoin_free(curr->str, buff)))
 			return (-1);
 	}
-	ft_putendl("End of read");
-	if (curr->str[0])
-		return (set_and_add(&datas, line, curr, new));
-	ft_putendl("EOF");
-	if (curr->str)
-	{
-		ft_strdel(&curr->str);
-		free(curr);
-		curr = NULL;
-	}
-	//return (free_link(&datas, fd));
-	return (0);
+	return (set_and_add(&datas, line, curr, new));
 }
