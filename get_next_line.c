@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 19:25:27 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/22 11:14:51 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,18 @@ int		lst_contains(t_list *lst, t_read **curr, int fd)
 	return (0);
 }
 
-/*int		free_link(t_list **datas, int fd)
+int		free_link(t_list **datas, t_read *curr)
 {
 	t_read	*read;
+
+	ft_strdel(&curr->str);
+	free(curr);
+	curr = NULL;
 	if (*datas == NULL)
 		return (0);
 	read = (t_read*)((*datas)->content);
-	ft_putstr("Current data fd: "); ft_putnbr(read->fd); ft_putendl("");
-	if (read->fd == fd)
-	{
-		ft_putendl("Unique link");
-		ft_strdel(&read->str);
-		//free(read);
-		free((*datas)->content);
-		(*datas)->content = NULL;
-		free(*datas);
-		*datas = NULL;
-	}
-	else
-		ft_putendl("Multiple links");
 	return (0);
-}*/
+}
 
 int		set_line(t_read *curr, char **line)
 {
@@ -78,7 +69,7 @@ int		set_line(t_read *curr, char **line)
 	return (0);
 }
 
-int		set_and_add(t_list **datas, char **line, t_read *curr, int new)
+int		set_data(t_list **datas, char **line, t_read *curr, int new)
 {
 	t_list *lst;
 
@@ -96,13 +87,7 @@ int		set_and_add(t_list **datas, char **line, t_read *curr, int new)
 		}
 		return (1);
 	}
-	if (curr->str)
-	{
-		ft_strdel(&curr->str);
-		free(curr);
-		curr = NULL;
-	}
-	return (0);
+	return (free_link(datas, curr));
 }
 
 int		get_next_line(const int fd, char **line)
@@ -129,5 +114,5 @@ int		get_next_line(const int fd, char **line)
 		if (ret < 0 || !(curr->str = ft_strjoin_free(curr->str, buff)))
 			return (-1);
 	}
-	return (set_and_add(&datas, line, curr, new));
+	return (set_data(&datas, line, curr, new));
 }

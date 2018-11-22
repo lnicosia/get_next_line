@@ -6,7 +6,7 @@
 /*   By: gaerhard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 12:10:16 by gaerhard          #+#    #+#             */
-/*   Updated: 2018/11/21 17:06:25 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/22 10:46:56 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		main(int argc, char **argv)
 	int		*fd;
 	int		i;
 	char	*line;
+	int		ret;
 
 	i = 1;
 	fd = malloc(sizeof(int) * argc);
@@ -34,18 +35,17 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	i = 1;
-	while (get_next_line(fd[i], &line) > 0)
+	while ((ret = get_next_line(fd[i], &line)) > 0)
 	{
 		//ft_putstr("boucle: ");
 		ft_putendl(line);
-		free(line);
-		line = NULL;
+		ft_strdel(&line);
 		i++;
 		if (i >= argc)
 			i = 1;
 	}
 	ft_putstr("gnl = 0: ");
-	ft_putendl(line);
+	ft_strdel(&line);
 	i = 1;
 	while (i < argc)
 	{
@@ -53,5 +53,7 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	free(fd);
+	fd = NULL;
 	while (1);
+	return (ret);
 }
