@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/22 11:14:51 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/22 14:44:57 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		free_link(t_list **datas, t_read *curr)
 	if (*datas == NULL)
 		return (0);
 	read = (t_read*)((*datas)->content);
+	free(*datas);
+	*datas = NULL;
 	return (0);
 }
 
@@ -87,7 +89,15 @@ int		set_data(t_list **datas, char **line, t_read *curr, int new)
 		}
 		return (1);
 	}
-	return (free_link(datas, curr));
+	if (new == 0)
+	{
+		if (!(lst = ft_lstnew(curr, sizeof(*curr))))
+			return (-1);
+		ft_lstadd(datas, lst);
+		free(curr);
+		curr = NULL;
+	}
+	return (0);
 }
 
 int		get_next_line(const int fd, char **line)

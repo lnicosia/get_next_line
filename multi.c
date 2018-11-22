@@ -6,7 +6,7 @@
 /*   By: gaerhard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 12:10:16 by gaerhard          #+#    #+#             */
-/*   Updated: 2018/11/22 10:46:56 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/22 13:54:33 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int		main(int argc, char **argv)
 	int		ret;
 
 	i = 1;
-	fd = malloc(sizeof(int) * argc);
+	fd = (int *)malloc(sizeof(int) * argc);
+	//ret = (int *)malloc(sizeof(int) * argc);
 	if (argc < 2)
 	{
 		ft_putstr("File name missing.\n");
@@ -35,10 +36,11 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	i = 1;
-	while ((ret = get_next_line(fd[i], &line)) > 0)
+	while (1)
 	{
-		//ft_putstr("boucle: ");
-		ft_putendl(line);
+		ret = get_next_line(fd[i], &line);
+			//ft_putstr("boucle: ");
+			ft_putendl(line);
 		ft_strdel(&line);
 		i++;
 		if (i >= argc)
@@ -54,6 +56,6 @@ int		main(int argc, char **argv)
 	}
 	free(fd);
 	fd = NULL;
-	while (1);
+	//while (1);
 	return (ret);
 }
