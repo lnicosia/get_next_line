@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:28:08 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/21 18:24:29 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/27 11:13:03 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	//ft_putendl("OPEN OK");
-	while (get_next_line(fd, &line) == 1)
+	/*while (get_next_line(fd, &line) == 1)
 	{
 		ft_putstr("line: ");
 		ft_putendl(line);
 		ft_strdel(&line);
-	}
-	//get_next_line(fd, line);
-	ft_strdel(&line);
+	}*/
+	get_next_line(fd, &line);
+	//ft_strdel(&line);
 	if (close(fd) == -1)
 	{
 		//ft_putendl("Err CLOSE");
 		return (1);
 	}
 	//ft_putendl("CLOSE OK");
-	while(1);
+	//while(1);
 	return (0);
 }

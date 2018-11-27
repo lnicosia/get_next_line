@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 14:28:08 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/27 10:58:58 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/27 11:07:05 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		main(int argc, char **argv)
 {
 	int		fd = 0;
 	int		i;
-	char	**line;
+	char	*line;
 	int		ret;
 
 	i = 1;
@@ -30,17 +30,18 @@ int		main(int argc, char **argv)
 	{
 		return (1);
 	}
-	line = (char**)malloc(sizeof(char*));
+	//line = (char**)malloc(sizeof(char*));
 	if (!(fd = open(argv[1], O_RDONLY)))
 	{
 		return (1);
 	}
-	while (((ret = (get_next_line(fd, line))) == 1))
+	while (((ret = (get_next_line(fd, &line))) == 1))
 	{
 		//ft_putstr("line: "); 
-		ft_putendl(*line);
-		ft_strdel(line);
+		ft_putendl(line);
+		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	if (close(fd) == -1)
 	{
 		return (1);
