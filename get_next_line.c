@@ -6,7 +6,7 @@
 /*   By: lnicosia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:05:31 by lnicosia          #+#    #+#             */
-/*   Updated: 2018/11/22 14:44:57 by lnicosia         ###   ########.fr       */
+/*   Updated: 2018/11/27 10:59:38 by lnicosia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,10 @@ int		free_link(t_list **datas, t_read *curr)
 {
 	t_read	*read;
 
-	ft_strdel(&curr->str);
-	free(curr);
-	curr = NULL;
+	(void)curr;
 	if (*datas == NULL)
-		return (0);
+		return (-1);
 	read = (t_read*)((*datas)->content);
-	free(*datas);
-	*datas = NULL;
 	return (0);
 }
 
@@ -108,7 +104,7 @@ int		get_next_line(const int fd, char **line)
 	char			buff[BUFF_SIZE + 1];
 	int				ret;
 
-	if (fd < 0 || line == NULL)
+	if (fd < 0 || line == NULL || BUFF_SIZE == 0 || read(fd, buff, 0) < 0)
 		return (-1);
 	if ((new = lst_contains(datas, &curr, fd)) == 0)
 	{
